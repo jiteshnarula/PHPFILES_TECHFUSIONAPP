@@ -3,7 +3,7 @@ require_once ('config.php');
 ?>
 <?php
 
-if(isset($_REQUEST['email']) && isset($_REQUEST['password'])) {
+if((isset($_REQUEST['email']) && isset($_REQUEST['password'])) && (!empty($_REQUEST['email'] && !empty($_REQUEST['password'])))) {
 	$email = $_REQUEST['email'];
 	$password = $_REQUEST['password'];
 }
