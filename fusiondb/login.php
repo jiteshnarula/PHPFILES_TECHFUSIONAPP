@@ -1,15 +1,25 @@
+<?php 
+require_once ('config.php');
+?>
 <?php
 
-$con = new mysqli("localhost","root","","techfusiondb");
-
-$st_check = $con->prepare("SELECT * FROM registered WHERE email=? and password=?");
-$st_check->bind_param("ss",$_GET["email"],$_GET["password"]);
-
-$st_check->execute();
-$rs = $st_check->get_result();
-
-if($rs->num_rows ==0){
-    echo '0';
+if(isset($_REQUEST['email']) && isset($_REQUEST['password'])) {
+	$email = $_REQUEST['email'];
+	$password = $_REQUEST['password'];
 }
-else
-    echo '1';
+else {
+	echo "-1";
+	return false;
+}
+
+$query = "SELECT * FROM `registered` WHERE (email='$email' OR phone='$email') and password='$password'";
+$result = mysqli_query($con,$query);
+$row = mysqli_fetch_array($result);
+$count = mysqli_num_rows($result);
+if($count == 0) {
+	echo '0';
+}
+else {
+	echo '1';
+}
+?>
